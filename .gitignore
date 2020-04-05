@@ -1,0 +1,7 @@
+*.sqlite3
+/apps/**/migrations/**
+/static
+/venv
+*.key
+test.py
+/.idea
