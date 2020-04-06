@@ -13,7 +13,10 @@ class Problem(models.Model):
 
     # 题目内容
     description = RichTextField(verbose_name='描述')
-    hint = RichTextField(null=True)
+    description_input = RichTextField(verbose_name='输入描述')
+    description_output = RichTextField(verbose_name='输出描述')
+    hint = RichTextField(null=True, verbose_name='提示')
+    source = RichTextField(null=True, verbose_name='来源')
 
     # 题目具体内容
     # [{input: "test", output: "123"}, {input: "test123", output: "456"}]

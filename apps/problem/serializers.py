@@ -10,7 +10,7 @@ class ProblemListCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Problem
         fields = ('display_id', 'author', 'title', 'is_public', 'description', 'hint', 'samples', 'test_case',
-                  'create_time', 'last_update_time', 'time_limit', 'memory_limit',)
+                  'create_time', 'last_update_time', 'time_limit', 'memory_limit', 'submission_number', 'ac_number')
 
         extra_kwargs = {
             'is_public': {'write_only': True},
@@ -66,6 +66,6 @@ class ProblemListCreateSerializer(serializers.ModelSerializer):
 class ProblemRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Problem
-        fields = ('display_id', 'title', 'description', 'hint', 'samples',
-                  'create_time', 'last_update_time', 'time_limit', 'memory_limit',
+        fields = ('display_id', 'title', 'description', 'hint', 'description_input', 'description_output', 'source',
+                  'create_time', 'last_update_time', 'time_limit', 'memory_limit', 'samples',
                   'submission_number', 'ac_number', 'wa_number', 'tle_number', 'mle_number', 're_number', 'ce_number')
