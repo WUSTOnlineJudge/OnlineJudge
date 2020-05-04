@@ -41,6 +41,10 @@ class Problem(models.Model):
     re_number = models.BigIntegerField(default=0, verbose_name="RE次数")
     ce_number = models.BigIntegerField(default=0, verbose_name="CE次数")
 
+    # 用户评价
+    stars = models.IntegerField(default=0, verbose_name="评价人数")
+    stars_number = models.BigIntegerField(default=0, verbose_name="题目星数")
+
     class Meta:
         unique_together = ("display_id",)
         ordering = ("create_time",)
@@ -77,10 +81,42 @@ class Problem(models.Model):
         self.save(update_fields=["ce_number"])
 
 
+class ProblemTag(models.Model):
+    tag_type_choice = (
+        (0, 'difficulty'),
+        (1, 'type')
+    )
+    problem = models.ManyToManyField(Problem)
+    tag_type = models.IntegerField(default=0, choices=tag_type_choice)
+    tag_string = models.TextField(default="")
+
+    class Meta:
+        verbose_name = '问题标签'
+        verbose_name_plural = verbose_name
+
+
 class AcmProblemStatus(models.Model):
+    status_choice = (
+        (0, 'Waiting'),
+        (1, 'Running'),
+        (2, 'Finish')
+    )
+    result_choice = (
+        (0, 'Accepted'),
+        (1, 'Presentation Error'),
+        (2, 'Time Limit Exceeded'),
+        (3, 'Memory Limit Exceeded'),
+        (4, 'Wrong Answer'),
+        (5, 'Runtime Error'),
+        (6, 'Output Limit Exceeded'),
+        (7, 'Compile Error'),
+        (8, 'System Error'),
+    )
+
     user = models.ForeignKey(User, models.CASCADE, verbose_name='提交用户')
-    problem_id = models.ForeignKey(Problem, models.CASCADE, verbose_name='提交题目')
-    status = models.IntegerField(default=0, verbose_name='状态')
+    problem = models.ForeignKey(Problem, models.CASCADE, verbose_name='提交题目')
+    status = models.IntegerField(default=0, choices=status_choice, verbose_name='状态')
+    result = models.IntegerField(default=4, choices=result_choice, verbose_name="结果")
     submit_time = models.IntegerField(default=time.time, verbose_name='提交时间')
 
     class Meta:
@@ -88,4 +124,4 @@ class AcmProblemStatus(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return f'用户名{self.user} 题目{self.problem_id} 状态{self.status}'
+        return f'用户名{self.user} 题目{self.problem_id} 状态{self.status} 结果{self.result}'
