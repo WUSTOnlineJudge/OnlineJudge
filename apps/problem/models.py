@@ -53,31 +53,31 @@ class Problem(models.Model):
         return f"id:{self.display_id} 标题: {self.title}"
 
     def add_submission_number(self):
-        self.submission_number = models.F("submission_number") + 1
+        self.submission_number += 1
         self.save(update_fields=["submission_number"])
 
     def add_ac_number(self):
-        self.ac_number = models.F("ac_number") + 1
+        self.ac_number += 1
         self.save(update_fields=["ac_number"])
 
     def add_wa_number(self):
-        self.submission_number = models.F("wa_number") + 1
+        self.submission_number += 1
         self.save(update_fields=["wa_number"])
 
     def add_tle_number(self):
-        self.submission_number = models.F("tle_number") + 1
+        self.submission_number += 1
         self.save(update_fields=["tle_number"])
 
     def add_mle_number(self):
-        self.submission_number = models.F("mle_number") + 1
+        self.submission_number += 1
         self.save(update_fields=["mle_number"])
 
     def add_re_number(self):
-        self.submission_number = models.F("re_number") + 1
+        self.submission_number += 1
         self.save(update_fields=["re_number"])
 
     def add_ce_number(self):
-        self.submission_number = models.F("ce_number") + 1
+        self.submission_number += 1
         self.save(update_fields=["ce_number"])
 
 
