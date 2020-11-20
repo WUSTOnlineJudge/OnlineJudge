@@ -25,7 +25,6 @@ class UserCreateSerializer(serializers.Serializer):
 
     def save(self):
         validated_data = self.validated_data
-        print(validated_data)
         user = User.objects.create(
             username=validated_data['username'],
             password=make_password(validated_data['password']),
@@ -41,3 +40,10 @@ class UserCreateSerializer(serializers.Serializer):
             sign=validated_data['sign'],
             school=validated_data['school']
         )
+
+
+class UserShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username']
+        read_only_fields = ['username']

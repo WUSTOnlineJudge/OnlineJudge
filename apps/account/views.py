@@ -6,3 +6,5 @@ from .models import User
 
 class UserCreateViewSet(CreateModelMixin, GenericViewSet):
     serializer_class = UserCreateSerializer
+
+

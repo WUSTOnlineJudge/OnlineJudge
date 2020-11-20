@@ -4,25 +4,28 @@ from account.models import User
 from json import loads
 
 
-class ProblemListCreateSerializer(serializers.ModelSerializer):
-    author = serializers.HiddenField(default=User.objects.all())
+class ProblemCreateSerializer(serializers.ModelSerializer):
+    author = serializers.SerializerMethodField()
+
+    def get_user(self, _):
+        return self.context['request'].user
 
     class Meta:
         model = Problem
-        fields = ('display_id', 'author', 'title', 'is_public', 'description', 'hint', 'samples', 'test_case',
-                  'create_time', 'last_update_time', 'time_limit', 'memory_limit', 'submission_number', 'ac_number')
-
-        extra_kwargs = {
-            'is_public': {'write_only': True},
-            'test_case': {'write_only': True},
-            'description': {'write_only': True},
-            'hint': {'write_only': True},
-            'time_limit': {'write_only': True},
-            'memory_limit': {'write_only': True},
-            'samples': {'write_only': True},
-            'create_time': {"read_only": True},
-            'last_update_time': {"read_only": True},
-        }
+        fields = ('id',
+                  'author',
+                  'title',
+                  'is_public',
+                  'description',
+                  'hint',
+                  'samples',
+                  'test_case',
+                  'create_time',
+                  'last_update_time',
+                  'time_limit',
+                  'memory_limit',
+                  'submission_number',
+                  'ac_number')
 
     @staticmethod
     def test_case(input_case):
@@ -53,7 +56,7 @@ class ProblemListCreateSerializer(serializers.ModelSerializer):
             display_id=attr['display_id'],
             is_public=attr['is_public'],
             title=attr['title'],
-            author=User.objects.all()[0],
+            author=self.author,
             description=attr['description'],
             hint=attr['hint'],
             samples=attr['samples'],
@@ -66,6 +69,36 @@ class ProblemListCreateSerializer(serializers.ModelSerializer):
 class ProblemRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Problem
-        fields = ('display_id', 'title', 'description', 'hint', 'description_input', 'description_output', 'source',
-                  'create_time', 'last_update_time', 'time_limit', 'memory_limit', 'samples',
-                  'submission_number', 'ac_number', 'wa_number', 'tle_number', 'mle_number', 're_number', 'ce_number')
+        fields = ('id',
+                  'title',
+                  'description',
+                  'hint',
+                  'description_input',
+                  'description_output',
+                  'source',
+                  'create_time',
+                  'last_update_time',
+                  'time_limit',
+                  'memory_limit',
+                  'samples',
+                  'submission_number',
+                  'ac_number')
+
+
+class ProblemListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Problem
+        fields = ('id',
+                  'title',
+                  'create_time',
+                  'last_update_time',
+                  'time_limit',
+                  'memory_limit',
+                  'submission_number',
+                  'ac_number')
+
+
+class ProblemShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Problem
+        fields = ('id', 'title')

@@ -1,5 +1,5 @@
 *.sqlite3
-/apps/**/migrations/**
+/apps/**/migrations/0*.*
 /static
 /venv
 *.key

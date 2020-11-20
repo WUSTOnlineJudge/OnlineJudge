@@ -20,8 +20,8 @@ import problem.views as problem_view
 
 router = DefaultRouter()
 router.register(r'accounts', account_view.UserCreateViewSet, basename='account_create')
-router.register(r'problems', problem_view.ProblemListCreateViewSet, basename='problem')
-router.register(r'problems', problem_view.ProblemRetrieveViewSet, basename='problem')
+router.register(r'problems', problem_view.ProblemReadOnlyViewSet, basename='problem')
+router.register(r'problems', problem_view.ProblemCreateSerializer, basename='problem')
 
 
 urlpatterns = [
